@@ -70,7 +70,7 @@ It’s clean, scalable, responsive, and perfect for both enterprise and portfoli
 ---
 
 **📁 Folder Structure**
-
+```
 EMS/
 │
 ├── backend/                  # 🧠 Server-side code (Node.js + Express)
@@ -96,7 +96,7 @@ EMS/
 │   └── package.json          # Frontend dependencies
 │
 └── README.md                 # 📘 Project documentation
-
+```
 ---
 
 **⚡ Getting Started**
