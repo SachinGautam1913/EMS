@@ -133,7 +133,7 @@ cd ../frontend
 npm install
 npm run dev
 ✅ Frontend running at http://localhost:5173
-
+```
 🧠 API Endpoints
 
 Method	Endpoint	Description
@@ -156,33 +156,19 @@ Role	Access Level
 📊 Dashboard Highlights
 
 🖥️ Admin Dashboard
-
 👥 Total Employees
-
 🧾 Active Leaves
-
 💰 Payroll Summary
-
 📈 Performance Stats
-
 🗓️ Upcoming Holidays
-
 💼 Employee Dashboard
-
 📅 Attendance Logs
-
 💸 Payslip Records
-
-🌴 Leave History
-
+🌴 Leave Histor
 ⭐ Performance Reviews
-
 🧱 Build & Deployment
-
 🧩 Build Frontend
 
-bash
-Copy code
 cd frontend
 npm run build
 ☁️ Deploy Backend
@@ -192,24 +178,17 @@ Make sure to configure environment variables in hosting settings.
 🧪 Future Enhancements
 
 📱 Mobile App (React Native)
-
 📧 Email / SMS Notifications
-
 🧾 Recruitment Tracking
-
 🖇️ Asset Management (Laptops, IDs, etc.)
-
 🧮 Biometric Attendance Integration
 
 🤝 Contributing
 Contributions are welcome! 💬
 
 Fork the repository
-
 Create a new feature branch
-
 Commit your changes
-
 Submit a Pull Request 🚀
 
 🪪 License
