@@ -135,7 +135,7 @@ npm run dev
 ✅ Frontend running at http://localhost:5173
 ```
 🧠 API Endpoints
-
+```
 Method	Endpoint	Description
 POST	/api/auth/register	Register new user
 POST	/api/auth/login	User login (returns JWT token)
@@ -145,7 +145,7 @@ PUT	/api/employees/:id	Update employee
 DELETE	/api/employees/:id	Delete employee
 POST	/api/employees/:id/avatar	Upload employee photo
 POST	/api/employees/:id/documents	Upload employee documents
-
+```
 🔐 Role-Based Access
 
 Role	Access Level
