@@ -5,7 +5,7 @@
 ![NodeJS](https://img.shields.io/badge/Backend-Node.js-43853d?logo=node.js)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-4EA94B?logo=mongodb)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![MadeBy](https://img.shields.io/badge/Made%20by-Sachin%20gautam-orange)
+![MadeBy](https://img.shields.io/badge/Made%20by-Sachin%20Gautam-blue)
 
 ---
 
