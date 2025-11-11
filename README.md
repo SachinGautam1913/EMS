@@ -72,29 +72,30 @@ It’s clean, scalable, responsive, and perfect for both enterprise and portfoli
 **📁 Folder Structure**
 
 EMS/
-├── backend/
-│ ├── server.js
-│ ├── config/
-│ ├── controllers/
-│ ├── middleware/
-│ ├── models/
-│ ├── routes/
-│ ├── utils/
-│ └── .env
 │
-└── frontend/
-├── src/
-│ ├── components/
-│ ├── pages/
-│ ├── context/
-│ ├── services/
-│ ├── App.jsx
-│ └── main.jsx
-├── public/
-└── package.json
-
-yaml
-Copy code
+├── backend/                  # 🧠 Server-side code (Node.js + Express)
+│   ├── server.js             # Main entry point for backend server
+│   ├── config/               # Database & environment configuration files
+│   ├── controllers/          # Logic for handling API requests
+│   ├── middleware/           # Custom middleware (auth, error handling, etc.)
+│   ├── models/               # Mongoose/Sequelize models for DB schemas
+│   ├── routes/               # Express routes (API endpoints)
+│   ├── utils/                # Utility/helper functions
+│   └── .env                  # Environment variables (not pushed to GitHub)
+│
+├── frontend/                 # 💻 Client-side code (React)
+│   ├── src/
+│   │   ├── components/       # Reusable UI components
+│   │   ├── pages/            # Page components (Dashboard, Login, etc.)
+│   │   ├── context/          # Context API for global state management
+│   │   ├── services/         # API calls to backend
+│   │   ├── App.jsx           # Root React component
+│   │   └── main.jsx          # React entry point
+│   │
+│   ├── public/               # Static files (images, icons, etc.)
+│   └── package.json          # Frontend dependencies
+│
+└── README.md                 # 📘 Project documentation
 
 ---
 
