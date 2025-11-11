@@ -196,14 +196,11 @@ Licensed under the MIT License — free to use, modify, and share with credit �
 
 👨‍💻 Author
 
-👤 Developed by Sachin Jatav
+👤 Developed by Sachin Gautam
 💻 Full Stack Developer | Passionate about Clean UI & Scalable Systems
 🌍 “Build smart, ship fast.”
 
 ⭐ If you like this project, don’t forget to drop a star!
-
-yaml
-Copy code
 
 ---
 
