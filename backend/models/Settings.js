@@ -55,33 +55,9 @@ const leaveTypeSchema = new mongoose.Schema({
   timestamps: true
 });
 
-const shiftSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true
-  },
-  startTime: {
-    type: String,
-    required: true
-  },
-  endTime: {
-    type: String,
-    required: true
-  },
-  breakDuration: {
-    type: Number,
-    default: 60 // in minutes
-  }
-}, {
-  timestamps: true
-});
-
 export const Department = mongoose.model('Department', departmentSchema);
 export const Holiday = mongoose.model('Holiday', holidaySchema);
 export const LeaveType = mongoose.model('LeaveType', leaveTypeSchema);
-export const Shift = mongoose.model('Shift', shiftSchema);
 
 
 

@@ -1,4 +1,4 @@
-import { Department, Holiday, LeaveType, Shift } from '../models/Settings.js';
+import { Department, Holiday, LeaveType } from '../models/Settings.js';
 import { validationResult } from 'express-validator';
 
 // ==================== Departments ====================
@@ -256,101 +256,6 @@ export const deleteLeaveType = async (req, res) => {
   }
 };
 
-// ==================== Shifts ====================
-
-export const getShifts = async (req, res) => {
-  try {
-    const shifts = await Shift.find();
-    res.json({
-      success: true,
-      data: shifts
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
-
-export const createShift = async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        errors: errors.array()
-      });
-    }
-
-    const shift = await Shift.create(req.body);
-    res.status(201).json({
-      success: true,
-      data: shift
-    });
-  } catch (error) {
-    if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: 'Shift already exists'
-      });
-    }
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
-
-export const updateShift = async (req, res) => {
-  try {
-    const shift = await Shift.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-
-    if (!shift) {
-      return res.status(404).json({
-        success: false,
-        message: 'Shift not found'
-      });
-    }
-
-    res.json({
-      success: true,
-      data: shift
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
-
-export const deleteShift = async (req, res) => {
-  try {
-    const shift = await Shift.findByIdAndDelete(req.params.id);
-
-    if (!shift) {
-      return res.status(404).json({
-        success: false,
-        message: 'Shift not found'
-      });
-    }
-
-    res.json({
-      success: true,
-      message: 'Shift deleted successfully'
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
 
 
 

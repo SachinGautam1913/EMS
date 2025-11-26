@@ -1,14 +1,7 @@
-import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import Employee from '../models/Employee.js';
 import { validationResult } from 'express-validator';
-
-// Generate JWT Token
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d'
-  });
-};
+import { generateToken } from '../utils/generateToken.js';
 
 // @desc    Register user
 // @route   POST /api/auth/register

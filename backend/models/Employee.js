@@ -67,6 +67,11 @@ const employeeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     default: null
+  },
+  shiftId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shift',
+    default: null
   }
 }, {
   timestamps: true

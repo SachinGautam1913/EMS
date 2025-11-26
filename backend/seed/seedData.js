@@ -162,11 +162,3 @@ const seedData = async () => {
 
 seedData();
 
-
-
-
-
-
-
-
-

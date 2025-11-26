@@ -3,9 +3,11 @@ import { body } from 'express-validator';
 import {
   getPerformanceReviews,
   getPerformanceReview,
+  getPerformanceByEmployee,
   createPerformanceReview,
   updatePerformanceReview,
-  deletePerformanceReview
+  deletePerformanceReview,
+  setGoals
 } from '../controllers/performanceController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { authorize } from '../middleware/roleMiddleware.js';
@@ -18,8 +20,18 @@ router.use(protect);
 // Get all performance reviews
 router.get('/', getPerformanceReviews);
 
+// Get performance by employee ID
+router.get('/employee/:employeeId', getPerformanceByEmployee);
+
 // Get single performance review
 router.get('/:id', getPerformanceReview);
+
+// Set goals/KPIs (Admin, HR)
+router.post('/goals', authorize('admin', 'hr'), [
+  body('employeeId').isMongoId().withMessage('Invalid employee ID'),
+  body('goals').isArray().withMessage('Goals must be an array'),
+  body('reviewPeriod').optional().trim()
+], setGoals);
 
 // Create performance review (Admin, HR)
 router.post('/', authorize('admin', 'hr'), [

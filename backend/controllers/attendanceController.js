@@ -1,5 +1,4 @@
 import Attendance from '../models/Attendance.js';
-import Leave from '../models/Leave.js';
 import Employee from '../models/Employee.js';
 import { validationResult } from 'express-validator';
 
@@ -134,7 +133,7 @@ export const clockOut = async (req, res) => {
 // @access  Private
 export const getAttendance = async (req, res) => {
   try {
-    const { employeeId, startDate, endDate, page = 1, limit = 10 } = req.query;
+    const { employeeId, from, to, page = 1, limit = 10 } = req.query;
 
     const query = {};
 
@@ -151,10 +150,10 @@ export const getAttendance = async (req, res) => {
       }
     }
 
-    if (startDate && endDate) {
+    if (from && to) {
       query.date = {
-        $gte: new Date(startDate),
-        $lte: new Date(endDate)
+        $gte: new Date(from),
+        $lte: new Date(to)
       };
     }
 
@@ -182,140 +181,6 @@ export const getAttendance = async (req, res) => {
   }
 };
 
-// @desc    Apply for leave
-// @route   POST /api/attendance/leaves
-// @access  Private
-export const applyLeave = async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        errors: errors.array()
-      });
-    }
-
-    const userId = req.user.id;
-    const employee = await Employee.findOne({ userId: userId });
-
-    if (!employee) {
-      return res.status(404).json({
-        success: false,
-        message: 'Employee not found'
-      });
-    }
-
-    const leave = await Leave.create({
-      ...req.body,
-      employeeId: employee._id
-    });
-
-    res.status(201).json({
-      success: true,
-      data: leave
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
-
-// @desc    Get leave requests
-// @route   GET /api/attendance/leaves
-// @access  Private
-export const getLeaves = async (req, res) => {
-  try {
-    const { status, employeeId, page = 1, limit = 10 } = req.query;
-
-    const query = {};
-
-    if (employeeId) {
-      const employee = await Employee.findById(employeeId);
-      if (employee) {
-        query.employeeId = employee._id;
-      }
-    } else if (req.user.role === 'employee') {
-      // Employees can only see their own leaves
-      const employee = await Employee.findOne({ userId: req.user.id });
-      if (employee) {
-        query.employeeId = employee._id;
-      }
-    }
-
-    if (status) {
-      query.status = status;
-    }
-
-    const leaves = await Leave.find(query)
-      .populate('employeeId', 'name email employeeId')
-      .populate('reviewedBy', 'name email')
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .sort({ appliedDate: -1 });
-
-    const total = await Leave.countDocuments(query);
-
-    res.json({
-      success: true,
-      count: leaves.length,
-      total,
-      page: parseInt(page),
-      pages: Math.ceil(total / limit),
-      data: leaves
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
-
-// @desc    Update leave status (approve/reject)
-// @route   PUT /api/attendance/leaves/:id/status
-// @access  Private (Admin, HR)
-export const updateLeaveStatus = async (req, res) => {
-  try {
-    const { status, comments } = req.body;
-
-    if (!['approved', 'rejected'].includes(status)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Status must be approved or rejected'
-      });
-    }
-
-    const leave = await Leave.findById(req.params.id);
-
-    if (!leave) {
-      return res.status(404).json({
-        success: false,
-        message: 'Leave request not found'
-      });
-    }
-
-    leave.status = status;
-    leave.reviewedBy = req.user.id;
-    leave.reviewedAt = new Date();
-    if (comments) {
-      leave.comments = comments;
-    }
-
-    await leave.save();
-
-    res.json({
-      success: true,
-      data: leave
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
 
 
 

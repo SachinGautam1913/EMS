@@ -14,12 +14,7 @@ import {
   getLeaveTypes,
   createLeaveType,
   updateLeaveType,
-  deleteLeaveType,
-  // Shifts
-  getShifts,
-  createShift,
-  updateShift,
-  deleteShift
+  deleteLeaveType
 } from '../controllers/settingsController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { authorize } from '../middleware/roleMiddleware.js';
@@ -54,16 +49,6 @@ router.post('/leave-types', authorize('admin', 'hr'), [
 ], createLeaveType);
 router.put('/leave-types/:id', authorize('admin', 'hr'), updateLeaveType);
 router.delete('/leave-types/:id', authorize('admin', 'hr'), deleteLeaveType);
-
-// ==================== Shifts ====================
-router.get('/shifts', getShifts);
-router.post('/shifts', authorize('admin'), [
-  body('name').trim().notEmpty().withMessage('Shift name is required'),
-  body('startTime').trim().notEmpty().withMessage('Start time is required'),
-  body('endTime').trim().notEmpty().withMessage('End time is required')
-], createShift);
-router.put('/shifts/:id', authorize('admin'), updateShift);
-router.delete('/shifts/:id', authorize('admin'), deleteShift);
 
 export default router;
 

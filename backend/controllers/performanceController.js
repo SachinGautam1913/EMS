@@ -182,6 +182,104 @@ export const deletePerformanceReview = async (req, res) => {
   }
 };
 
+// @desc    Set goals/KPIs for employee
+// @route   POST /api/performance/goals
+// @access  Private (Admin, HR)
+export const setGoals = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        errors: errors.array()
+      });
+    }
+
+    const { employeeId, goals, reviewPeriod } = req.body;
+
+    const employee = await Employee.findById(employeeId);
+    if (!employee) {
+      return res.status(404).json({
+        success: false,
+        message: 'Employee not found'
+      });
+    }
+
+    // Create or update performance review with goals
+    const review = await Performance.findOneAndUpdate(
+      { 
+        employeeId: employee._id,
+        reviewPeriod: reviewPeriod || new Date().getFullYear().toString()
+      },
+      {
+        employeeId: employee._id,
+        goals: goals || [],
+        reviewPeriod: reviewPeriod || new Date().getFullYear().toString(),
+        reviewedBy: req.user.id
+      },
+      {
+        new: true,
+        upsert: true,
+        runValidators: true
+      }
+    );
+
+    res.status(201).json({
+      success: true,
+      message: 'Goals set successfully',
+      data: review
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// @desc    Get performance by employee ID
+// @route   GET /api/performance/employee/:employeeId
+// @access  Private
+export const getPerformanceByEmployee = async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+
+    const employee = await Employee.findById(employeeId);
+    if (!employee) {
+      return res.status(404).json({
+        success: false,
+        message: 'Employee not found'
+      });
+    }
+
+    // Check authorization - employees can only see their own reviews
+    if (req.user.role === 'employee') {
+      const userEmployee = await Employee.findOne({ userId: req.user.id });
+      if (!userEmployee || userEmployee._id.toString() !== employeeId) {
+        return res.status(403).json({
+          success: false,
+          message: 'Not authorized to view this performance data'
+        });
+      }
+    }
+
+    const reviews = await Performance.find({ employeeId: employee._id })
+      .populate('reviewedBy', 'name email')
+      .sort({ reviewDate: -1 });
+
+    res.json({
+      success: true,
+      count: reviews.length,
+      data: reviews
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 
 
 
